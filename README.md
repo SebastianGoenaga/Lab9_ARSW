@@ -153,4 +153,4 @@ Pasos para correcto funcionamiento
 ## Imagenes del programa
 
 ![foto1](img/diagrama.png)
-![foto2](funcionando.png)
+![foto2](img/funcionando.png)
