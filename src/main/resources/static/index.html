@@ -30,15 +30,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
 <body>
-	X:
+	
 	<input id="x" type="number" /> Y:
 	<input id="y" type="number" />
 	<button
 		onclick="app.publishPoint($('#x').val(),$('#y').val(),$('#idpoint').val())">Send
 		point</button>
-	IDPoint:
 	<input id="idpoint" type="number" />
-	<button onclick="app.init($('#idpoint').val())">Connect</button>
+	<button onclick="app.init($('#idpoint').val());app.errase()">Connect</button>
 	<canvas id="canvas" width="800" height="600"></canvas>
+	<button onclick="app.errase()">Limpiar canvas</button>
+
 </body>
 </html>

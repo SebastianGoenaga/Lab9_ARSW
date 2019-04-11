@@ -8,13 +8,29 @@ var app = (function () {
     }
     
     var stompClient = null;
+    var idpoint = null;
 
     var addPointToCanvas = function (point) {        
         var canvas = document.getElementById("canvas");
         var ctx = canvas.getContext("2d");
         ctx.beginPath();
-        ctx.arc(point.x, point.y, 30, 0, 2 * Math.PI);
+        ctx.arc(point.x, point.y, 1	, 0, 2 * Math.PI);
         ctx.stroke();
+    };
+    var addPolygonToCanvas = function (points) {        
+        var canvas = document.getElementById("canvas");
+        var ctx = canvas.getContext("2d");
+        ctx.beginPath();
+        ctx.moveTo(points[0].x,points[0].y);
+        ctx.lineTo(points[1].x,points[1].y);
+        ctx.lineTo(points[2].x,points[2].y);
+        ctx.lineTo(points[3].x,points[3].y);
+        ctx.stroke();
+    };
+    var clear = function () {        
+        var canvas = document.getElementById("canvas");
+        var ctx = canvas.getContext("2d");
+        ctx.clearRect(0,0,canvas.width,canvas.height);
     };
     
     
@@ -45,8 +61,17 @@ var app = (function () {
             
                 
             });
+            stompClient.subscribe('/topic/newpolygon.'+idpoint, function (eventbody) {
+                
+                var points = JSON.parse(eventbody.body);
+                
+                // var pt=new Point(point["x"],point["y"]);
+                addPolygonToCanvas(points);
+                 
+                     
+                 });
         });
-
+        
     };
     
     
@@ -55,9 +80,11 @@ var app = (function () {
 
         init: function (idpoint) {
             var can = document.getElementById("canvas");
+            app.idpoint=idpoint;
             
             // websocket connection
             connectAndSubscribe(idpoint);
+            can.addEventListener('click',app.clicpoint);
         },
 
         publishPoint: function(px,py,idpoint){
@@ -67,8 +94,14 @@ var app = (function () {
 
             // publicar el evento
             
-            stompClient.send("/topic/newpoint."+idpoint, {}, JSON.stringify(pt)); 
+            stompClient.send("/app/newpoint."+ app.idpoint, {}, JSON.stringify(pt)); 
             
+        },
+        clicpoint: function(event){
+        	var canvas=document.getElementById("canvas");
+        	var delta=canvas.getBoundingClientRect();
+        	
+        	publishPoint(event.pageX-delta.left,event.pageY-delta.top);
         },
 
         disconnect: function () {
@@ -77,6 +110,9 @@ var app = (function () {
             }
             setConnected(false);
             console.log("Disconnected");
+        },
+        errase:function(){
+        	clear();
         }
     };
 
