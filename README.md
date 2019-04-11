@@ -142,3 +142,15 @@ Para ver cómo manejar esto desde el manejador de eventos STOMP del servidor, re
 3. La aplicación propaga correctamente el evento de creación del polígono, cuando colaborativamente se insertan cuatro puntos.
 4. La aplicación propaga correctamente el evento de creación del polígono, cuando colaborativamente se insertan cuatro puntos, con 2 o más dibujos simultáneamente.
 5. En la implementación se tuvo en cuenta la naturaleza concurrente del ejercicio. Por ejemplo, si se mantiene el conjunto de los puntos recibidos en una colección, la misma debería ser de tipo concurrente (thread-safe).
+
+## Pasos a seguir para ejecución
+Pasos para correcto funcionamiento
+- Ejecute el comando `mvn spring-boot:run` en la raiz del repositorio.
+- En su navegador abra tantos clientes como desee con URL `localhost:8080`.
+- Establecer ID del canal en todos los clientes y haga click en el boton Connect antes de comenzar a enviar puntos.
+- Escriba la coordenada de los puntos y haga click sobre el boton enviar Send.
+
+## Imagenes del programa
+
+![foto1](img/diagrama.png)
+![foto2](funcionando.png)
